@@ -25,5 +25,10 @@ npm-debug.log*
 # Agent scratch space (local issue tracker: specs and tickets)
 .scratch/
 
+# Claude Code: local project notes and settings, kept out of the public repository
+CLAUDE.md
+.claude/
+.mcp.json
+
 # Local export of the Claude Design project (the source of truth lives there)
 design/
