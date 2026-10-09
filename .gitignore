@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Astro generated types and cache
+.astro/
+
+# Local environment
+.env
+.env.*
+!.env*.example
+
+# Editors and OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Agent scratch space (local issue tracker: specs and tickets)
+.scratch/
+
+# Local export of the Claude Design project (the source of truth lives there)
+design/
