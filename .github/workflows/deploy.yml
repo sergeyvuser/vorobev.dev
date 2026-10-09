@@ -1,0 +1,50 @@
+# Builds the site and publishes it to GitHub Pages on every push to main.
+# Repository settings → Pages → Source must be "GitHub Actions".
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  # A "Run workflow" button on the Actions tab, to redeploy without a commit.
+  workflow_dispatch:
+
+# The minimum the jobs need: read the code, publish to Pages, and prove to Pages
+# which workflow run is deploying (an OIDC token, hence id-token).
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deployment at a time: a running one always finishes, and a newer push waits for it
+# (replacing any older run still waiting) instead of racing it.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v7
+
+      # Installs dependencies from package-lock.json, runs `npm run build`
+      # and uploads dist/ as the Pages artifact.
+      - name: Install, build and upload the site
+        uses: withastro/action@v6
+        with:
+          # Same as "engines" in package.json.
+          node-version: 24.21.0
+        env:
+          ASTRO_TELEMETRY_DISABLED: 1
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
