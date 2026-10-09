@@ -1,0 +1,46 @@
+---
+// Evaluated at build time: the year of the last deploy.
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="rule" aria-hidden="true"></div>
+  <span>© {year} Sergey Vorobev</span>
+  <div class="links">
+    <a href="https://github.com/sergeyvuser">GitHub</a>
+    <a href="https://t.me/Sergei_Vorobev">Telegram</a>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px 24px;
+    padding: 24px 0 40px;
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  .rule {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--grad-fill);
+    opacity: 0.8;
+  }
+
+  .links {
+    display: flex;
+    gap: 20px;
+  }
+
+  .links a {
+    /* Not in the design: brings the tap target up to 24 px tall (WCAG 2.2 target size). */
+    padding-block: 4px;
+  }
+</style>

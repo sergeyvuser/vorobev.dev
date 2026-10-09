@@ -1,0 +1,51 @@
+---
+---
+
+<header class="site-header">
+  <a class="monogram" href="#top" aria-label="Sergey Vorobev, home">SV</a>
+  <nav aria-label="Sections">
+    <a href="#projects">Projects</a>
+    <a href="#about">About</a>
+  </nav>
+</header>
+
+<style>
+  .site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 0;
+  }
+
+  .monogram {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 9px;
+    background: var(--grad-fill);
+    color: var(--on-grad);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+  }
+
+  .monogram:hover {
+    color: var(--on-grad);
+  }
+
+  nav {
+    display: flex;
+    gap: 20px;
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  nav a {
+    text-decoration: none;
+    /* Not in the design: brings the tap target up to 24 px tall (WCAG 2.2 target size). */
+    padding-block: 4px;
+  }
+</style>

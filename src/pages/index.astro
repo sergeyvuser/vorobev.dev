@@ -1,15 +1,96 @@
 ---
-// Placeholder until the page from the design is built (step 2).
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import Hero from '../components/Hero.astro';
+import Section from '../components/Section.astro';
+import ProjectCard, { type ProjectLink } from '../components/ProjectCard.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+
+const cryptoAlertsStack = [
+  'Python 3.14',
+  'FastAPI',
+  'PostgreSQL',
+  'Redis',
+  'RabbitMQ · FastStream',
+  'Taskiq',
+  'WebSocket',
+  'Docker Compose',
+  'Caddy',
+  'GitHub Actions CI/CD',
+  'Prometheus',
+  'Grafana',
+  'OpenTelemetry · Jaeger',
+  'pytest + testcontainers',
+];
+
+const cryptoAlertsLinks: ProjectLink[] = [
+  { label: 'Open live demo', href: 'https://alerts.vorobev.dev', primary: true },
+  { label: 'Grafana dashboard', href: 'https://grafana.vorobev.dev' },
+  { label: 'Source on GitHub', href: 'https://github.com/sergeyvuser/demo-fastapi-app' },
+];
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Sergey Vorobev</title>
-  </head>
-  <body>
-    <h1>Sergey Vorobev</h1>
-  </body>
-</html>
+<Base
+  title="Sergey Vorobev — Python backend developer"
+  description="I build async Python services that run in production. Crypto Alerts: live demo, public Grafana dashboard and source code."
+>
+  <div class="container">
+    <SiteHeader />
+
+    <main id="top">
+      <Hero
+        role="Python backend developer"
+        name="Sergey Vorobev"
+        pitch="I build async Python services that run in production — tested, observable, and calm under load."
+      />
+
+      <Section id="projects" number="01" title="Projects">
+        <ProjectCard
+          id="ca"
+          name="Crypto Alerts"
+          live
+          badges={['UI in progress']}
+          summary="Price alerts for crypto: set a threshold, get a Telegram message when the market crosses it."
+          detail="An async Python backend split into services that talk through a message broker — deployed to production and observable end to end."
+          stack={cryptoAlertsStack}
+          stackInProgress={['React + TS · in progress']}
+          links={cryptoAlertsLinks}
+        >
+          {/* Never print the demo password here: this page is indexed and forwarded. */}
+          Shared demo account: credentials are in the
+          <a href="https://github.com/sergeyvuser/demo-fastapi-app#readme">project README</a>.
+        </ProjectCard>
+      </Section>
+
+      <Section id="about" number="02" title="About">
+        <p class="about-lead">
+          I'm a backend developer working mostly in Python. I like systems that are boring to operate: services with
+          clear boundaries, tests that run against real databases, and metrics and traces that tell you what broke
+          before a user does.
+        </p>
+        <p class="about-muted">Production readiness is part of the feature, not a follow-up ticket.</p>
+      </Section>
+    </main>
+
+    <SiteFooter />
+  </div>
+</Base>
+
+<style>
+  .about-lead,
+  .about-muted {
+    max-width: 60ch;
+    font-size: 17px;
+    line-height: 1.65;
+    text-wrap: pretty;
+  }
+
+  .about-lead {
+    margin: 0;
+  }
+
+  .about-muted {
+    margin: 14px 0 0;
+    color: var(--muted);
+  }
+</style>

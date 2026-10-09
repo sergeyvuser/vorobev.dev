@@ -1,0 +1,237 @@
+---
+export interface ProjectLink {
+  label: string;
+  href: string;
+  /** One primary link per card: the gradient button. */
+  primary?: boolean;
+}
+
+interface Props {
+  /** Prefix for the heading id, e.g. "ca" gives "ca-h". */
+  id: string;
+  name: string;
+  live: boolean;
+  /** Dashed "in progress" badges next to the status. */
+  badges?: string[];
+  /** One sentence: what it does. */
+  summary: string;
+  /** What it demonstrates, shown muted. */
+  detail: string;
+  stack: string[];
+  /** Dashed chips at the end of the stack for parts not finished yet. */
+  stackInProgress?: string[];
+  links: ProjectLink[];
+}
+
+const { id, name, live, badges = [], summary, detail, stack, stackInProgress = [], links } = Astro.props;
+const headingId = `${id}-h`;
+---
+
+<article class="card" aria-labelledby={headingId}>
+  <div class="edge" aria-hidden="true"></div>
+
+  {
+    (live || badges.length > 0) && (
+      <div class="badges">
+        {live && (
+          <span class="badge badge-live">
+            <span class="dot" aria-hidden="true" />
+            Live
+          </span>
+        )}
+        {badges.map((badge) => (
+          <span class="badge badge-dashed">{badge}</span>
+        ))}
+      </div>
+    )
+  }
+
+  <h3 id={headingId}>{name}</h3>
+  <p class="summary">{summary}</p>
+  <p class="detail">{detail}</p>
+
+  <ul class="stack" aria-label="Stack">
+    {stack.map((item) => <li class="chip">{item}</li>)}
+    {stackInProgress.map((item) => <li class="chip chip-dashed">{item}</li>)}
+  </ul>
+
+  <div class="links">
+    {
+      links.map((link) => (
+        <a class:list={['link', link.primary ? 'link-primary' : 'link-secondary']} href={link.href}>
+          {link.label} <span aria-hidden="true">↗</span>
+        </a>
+      ))
+    }
+  </div>
+
+  {/* Optional note under the links, e.g. where to find the demo account. */}
+  {
+    Astro.slots.has('default') && (
+      <p class="note">
+        <slot />
+      </p>
+    )
+  }
+</article>
+
+<style>
+  .card {
+    position: relative;
+    overflow: hidden;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: clamp(22px, 5vi, 36px);
+  }
+
+  .edge {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--grad-fill);
+  }
+
+  .badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    height: 26px;
+    padding: 0 10px;
+    border-radius: 999px;
+    font-size: 12.5px;
+  }
+
+  .badge-live {
+    gap: 7px;
+    background: var(--chip);
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--live);
+    box-shadow: 0 0 0 3px color-mix(in oklch, var(--live) 25%, transparent);
+  }
+
+  .badge-dashed {
+    border: 1px dashed var(--line);
+    font-weight: 500;
+    color: var(--muted);
+  }
+
+  h3 {
+    margin: 0;
+    font-size: clamp(26px, 5.4vi, 34px);
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    font-weight: 700;
+  }
+
+  .summary {
+    margin: 12px 0 0;
+    font-size: 17px;
+    line-height: 1.55;
+    text-wrap: pretty;
+  }
+
+  .detail {
+    margin: 12px 0 0;
+    font-size: 15.5px;
+    line-height: 1.6;
+    color: var(--muted);
+    text-wrap: pretty;
+  }
+
+  .stack {
+    list-style: none;
+    margin: 24px 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .chip {
+    height: 26px;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 9px;
+    border-radius: 6px;
+    background: var(--chip);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink);
+  }
+
+  .chip-dashed {
+    background: none;
+    border: 1px dashed var(--line);
+    color: var(--muted);
+  }
+
+  /* auto-fit: as many 170 px columns as fit; on a phone they stack one per row. */
+  .links {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 10px;
+    margin-top: 28px;
+  }
+
+  .link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    min-height: 48px;
+    padding: 0 16px;
+    border-radius: 10px;
+    font-size: 15px;
+    text-decoration: none;
+  }
+
+  .link-primary {
+    background: var(--grad-fill);
+    color: var(--on-grad);
+    font-weight: 650;
+  }
+
+  .link-primary:hover {
+    filter: brightness(1.06);
+    color: var(--on-grad);
+  }
+
+  .link-secondary {
+    border: 1px solid var(--line);
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .link-secondary:hover {
+    border-color: var(--accent);
+    color: var(--ink);
+  }
+
+  .note {
+    margin: 16px 0 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--muted);
+  }
+
+  /* The slot content is not part of this component, so the selector needs :global(). */
+  .note :global(a) {
+    color: var(--ink);
+  }
+</style>

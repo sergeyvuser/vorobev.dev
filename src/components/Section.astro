@@ -1,0 +1,48 @@
+---
+interface Props {
+  /** The anchor the header navigation links to, e.g. "projects". */
+  id: string;
+  /** The decorative two-digit number before the heading, e.g. "01". */
+  number: string;
+  title: string;
+}
+
+const { id, number, title } = Astro.props;
+const headingId = `${id}-h`;
+---
+
+<section id={id} aria-labelledby={headingId}>
+  <div class="heading">
+    <span class="number" aria-hidden="true">{number}</span>
+    <h2 id={headingId}>{title}</h2>
+  </div>
+  <slot />
+</section>
+
+<style>
+  section {
+    padding-bottom: clamp(56px, 12vi, 96px);
+  }
+
+  .heading {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 24px;
+  }
+
+  .number {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--accent);
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 22px;
+    letter-spacing: -0.015em;
+    font-weight: 650;
+  }
+</style>

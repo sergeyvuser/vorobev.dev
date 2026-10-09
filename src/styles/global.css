@@ -1,0 +1,75 @@
+/*
+ * Design tokens — the "Aurora" palette from the Claude Design project (Site Aurora.dc.html).
+ * Each colour is declared once with light-dark(): the browser picks the first value in a light
+ * colour scheme and the second in a dark one. `color-scheme: light dark` tells it to follow the
+ * system preference, so the theme switches with no JavaScript.
+ */
+:root {
+  color-scheme: light dark;
+
+  --bg: light-dark(#f6f9f7, #061a1c);
+  --surface: light-dark(#ffffff, #0b2427);
+  --ink: light-dark(#0a2627, #e6f1ed);
+  --muted: light-dark(#4a5f5c, #93aba6);
+  --line: light-dark(#dae4e0, #1b393b);
+  --chip: light-dark(#ecf3ef, #102f32);
+  --accent: light-dark(oklch(0.48 0.1 175), oklch(0.86 0.16 140));
+  --live: light-dark(oklch(0.58 0.17 140), oklch(0.88 0.19 135));
+
+  /* The name in the hero: darker stops in the light theme, brighter ones in the dark theme. */
+  --grad-text: linear-gradient(
+    110deg,
+    light-dark(oklch(0.38 0.07 220), oklch(0.8 0.1 200)) 0%,
+    light-dark(oklch(0.46 0.11 180), oklch(0.85 0.14 165)) 50%,
+    light-dark(oklch(0.52 0.15 145), oklch(0.91 0.18 130)) 100%
+  );
+  /* Fills (monogram, primary button, card edge) are light in both themes, so text on them is dark. */
+  --grad-fill: linear-gradient(110deg, oklch(0.8 0.11 190), oklch(0.86 0.15 155), oklch(0.91 0.18 128));
+  --on-grad: #052022;
+
+  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+  /* Side gutter: 20 px on a phone, growing to 40 px on a desktop. */
+  --gutter: clamp(20px, 6vi, 40px);
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  color: inherit;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  color: var(--accent);
+}
+
+/* Visible keyboard focus everywhere; :focus-visible skips the ring on mouse clicks. */
+a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Content column: 760 px wide at most, centred. */
+.container {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  box-sizing: border-box;
+}

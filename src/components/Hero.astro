@@ -1,0 +1,110 @@
+---
+interface Props {
+  role: string;
+  name: string;
+  pitch: string;
+}
+
+const { role, name, pitch } = Astro.props;
+---
+
+<section class="hero" aria-labelledby="name">
+  <p class="role">{role}</p>
+  <h1 id="name" class="name">{name}</h1>
+  <p class="pitch">{pitch}</p>
+  <div class="actions">
+    <a class="btn btn-ink" href="https://github.com/sergeyvuser">GitHub <span aria-hidden="true">↗</span></a>
+    <a class="btn btn-outline" href="https://t.me/Sergei_Vorobev">Telegram <span aria-hidden="true">↗</span></a>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding: clamp(48px, 12vi, 96px) 0 clamp(48px, 10vi, 80px);
+  }
+
+  .role {
+    margin: 0 0 16px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    color: var(--accent);
+  }
+
+  /*
+   * Gradient text: the gradient is painted as the background, clipped to the glyphs,
+   * and the text itself is made transparent so the background shows through.
+   */
+  .name {
+    margin: 0;
+    font-size: clamp(40px, 10vi, 68px);
+    line-height: 1.04;
+    letter-spacing: -0.035em;
+    font-weight: 700;
+    background: var(--grad-text);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    padding-bottom: 4px;
+  }
+
+  /*
+   * Windows high-contrast mode (forced colours) drops backgrounds, which would leave the
+   * transparent text invisible. Give it the system text colour instead.
+   */
+  @media (forced-colors: active) {
+    .name {
+      background: none;
+      color: CanvasText;
+    }
+  }
+
+  .pitch {
+    margin: 20px 0 0;
+    max-width: 34ch;
+    font-size: clamp(18px, 3.2vi, 21px);
+    line-height: 1.5;
+    color: var(--muted);
+    text-wrap: pretty;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 32px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 0 18px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .btn-ink {
+    background: var(--ink);
+    color: var(--bg);
+  }
+
+  .btn-ink:hover {
+    opacity: 0.85;
+    color: var(--bg);
+  }
+
+  .btn-outline {
+    border: 1px solid var(--line);
+    color: var(--ink);
+  }
+
+  .btn-outline:hover {
+    border-color: var(--ink);
+    color: var(--ink);
+  }
+</style>

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36">
+  <defs>
+    <!-- The design's --grad-fill: teal, green, lime at 110 degrees, in sRGB equivalents. -->
+    <linearGradient id="g" x1="0" y1="0.3" x2="1" y2="0.7">
+      <stop offset="0" stop-color="#6fd0c6"/>
+      <stop offset="0.5" stop-color="#8ee0a2"/>
+      <stop offset="1" stop-color="#c4ef7c"/>
+    </linearGradient>
+  </defs>
+  <rect width="36" height="36" rx="9" fill="url(#g)"/>
+  <text x="18" y="18" dominant-baseline="central" text-anchor="middle" fill="#052022"
+        font-family="ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="15" font-weight="700">SV</text>
+</svg>
