@@ -34,6 +34,18 @@
   --gutter: clamp(20px, 6vi, 40px);
 }
 
+/*
+ * A theme chosen with the header toggle. light-dark() follows the color-scheme property,
+ * so forcing it here switches every token above at once.
+ */
+:root[data-theme='light'] {
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+}
+
 html,
 body {
   margin: 0;
@@ -60,7 +72,8 @@ a:hover {
 }
 
 /* Visible keyboard focus everywhere; :focus-visible skips the ring on mouse clicks. */
-a:focus-visible {
+a:focus-visible,
+button:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
   border-radius: 6px;

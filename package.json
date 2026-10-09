@@ -9,7 +9,8 @@
   "scripts": {
     "dev": "astro dev --host 127.0.0.1",
     "build": "astro build",
-    "preview": "astro preview --host 127.0.0.1"
+    "preview": "astro preview --host 127.0.0.1",
+    "images": "node scripts/render-images.mjs"
   },
   "dependencies": {
     "astro": "7.3.8"

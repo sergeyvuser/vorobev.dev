@@ -29,7 +29,28 @@ const ogImageAlt = 'Sergey Vorobev, Python backend developer. Crypto Alerts: liv
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f6f9f7" />
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#061a1c" />
 
+    {/*
+      Applies a theme saved by the header toggle before the first paint, so the page does not
+      flash the system theme first. is:inline keeps it a plain blocking script in the HTML;
+      Astro would otherwise bundle it as a deferred module, which runs too late.
+    */}
+    <script is:inline>
+      (() => {
+        let saved = null;
+        try {
+          saved = localStorage.getItem('theme');
+        } catch {
+          // Storage can be blocked (privacy settings); the page then follows the system theme.
+        }
+        if (saved !== 'light' && saved !== 'dark') return;
+        document.documentElement.dataset.theme = saved;
+        const color = saved === 'dark' ? '#061a1c' : '#f6f9f7';
+        for (const meta of document.querySelectorAll('meta[name="theme-color"]')) meta.content = color;
+      })();
+    </script>
+
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
     {/* Open Graph: the card that LinkedIn, Telegram, Slack and others draw for a shared link. */}
     <meta property="og:type" content="website" />
